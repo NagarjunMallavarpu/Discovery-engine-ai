@@ -4,6 +4,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express.js-4.19-000000?logo=express&logoColor=white)](https://expressjs.com/)
 [![Prisma](https://img.shields.io/badge/Prisma-5.12-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-1.5_Flash-8E44AD?logo=google&logoColor=white)](https://ai.google.dev/)
 [![JWT Auth](https://img.shields.io/badge/JWT-Protected-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -11,17 +12,17 @@
 [![Hackathon](https://img.shields.io/badge/Hackathon-AI_BUILD_2026-FF5722?logo=rocket&logoColor=white)](#-hackathon-information)
 [![Track](https://img.shields.io/badge/Track-7_Discovery_Engine-blue.svg)](#-hackathon-information)
 
-An AI-powered product discovery and personalized recommendation platform that transforms traditional static keyword search into a real-time, intent-aware shopping experience.
+An AI-powered product discovery and personalized recommendation platform that transforms static keyword search into a real-time, intent-aware shopping experience.
 
 ---
 
 ## 🎯 Project Objective
 
-Traditional e-commerce platforms rely heavily on exact keyword matching. When shoppers enter natural language requests like *"lightweight laptop for coding and video editing under ₹100,000"* or *"gaming setup for immersive audio"*, static keyword search engines often return irrelevant results or empty pages.
+Traditional e-commerce platforms rely heavily on exact keyword matching. When shoppers enter natural language queries like *"lightweight laptop for coding and video editing under ₹100,000"* or *"gaming setup for immersive audio"*, keyword search engines often return irrelevant results or empty pages.
 
 **AI Discovery Engine** solves this by:
-1. **Understanding Natural Language Intent**: Parsing intent, budget limits, target categories, and specification requirements using **Google Gemini 1.5 Flash**.
-2. **Transparent Explainable AI**: Providing multi-metric confidence scores (Confidence %, Attribute Similarity %, Category Match %) alongside human-readable rationales so shoppers understand *why* an item was recommended.
+1. **Understanding Natural Language Intent**: Parsing intent tags, budget caps, target categories, and specifications using **Google Gemini 1.5 Flash**.
+2. **Transparent Explainable AI**: Providing multi-metric confidence scores (Confidence %, Attribute Similarity %, Category Match %) alongside human-readable rationales.
 3. **Smart Ecosystem Bundling**: Assembling complementary 4-piece product ecosystems (*Complete The Look*) and Amazon-style *Frequently Bought Together* widgets with 1-click cart addition.
 4. **Never-Empty Cold Start Guarantee**: Ensuring new or unauthenticated users immediately receive high-affinity trending and popular catalog items.
 
@@ -40,22 +41,22 @@ This project was developed for **AI BUILD 2026**:
 
 ```mermaid
 flowchart TD
-    User["User / Shopper"] <-->|HTTPS / JSON| Frontend["React 18 + Vite Frontend"]
-    Frontend <-->|REST API / Axios| Backend["Express.js API Server"]
-    
+    User["User / Shopper"] -->|HTTPS / JSON| Frontend["React 18 + Vite Frontend"]
+    Frontend -->|REST API / Axios| Backend["Express.js API Server"]
+
     subgraph Core_Services["Core Platform Services"]
-        Backend <--> IntentDet["Intent Detector Service"]
-        Backend <--> RecEngine["Multi-Factor Recommendation Engine"]
-        Backend <--> BundleEng["Smart Bundle Engine"]
-        Backend <--> Analytics["Analytics & Feedback Service"]
+        Backend --> IntentDet["Intent Detector Service"]
+        Backend --> RecEngine["Recommendation Engine"]
+        Backend --> BundleEng["Smart Bundle Engine"]
+        Backend --> Analytics["Analytics & Feedback Service"]
     end
 
-    Backend <-->|@google/generative-ai| Gemini["Google Gemini 1.5 Flash AI"]
-    Backend <-->|Prisma ORM| DB[("SQLite Database (dev.db)")]
+    Backend -->|Google GenAI SDK| Gemini["Google Gemini 1.5 Flash AI"]
+    Backend -->|Prisma ORM| DB[("SQLite Database dev.db")]
 
-    IntentDet -->|Extract Intent & Category| RecEngine
+    IntentDet -->|Extract Intent| RecEngine
     RecEngine -->|Compute Composite Score| Frontend
-    Analytics -->|Track SHOWN / CLICKED / CARTED| DB
+    Analytics -->|Track User Events| DB
 ```
 
 ---
@@ -89,7 +90,7 @@ sequenceDiagram
     API->>Engine: Run Multi-Factor Scoring Engine
     Engine->>DB: Fetch Candidate Products & View History
     DB-->>Engine: Raw Products List
-    Engine->>Engine: Calculate S = (W_intent * S_intent) + (W_sim * S_sim) + ...
+    Engine->>Engine: Calculate Composite Score S
     Engine-->>API: Ranked Recommendations with Match %
     API-->>Client: JSON Response (Items + AI Rationales + Confidence Meters)
     Client->>Shopper: Render Discovery UI
@@ -253,16 +254,19 @@ Discovery Engine/
 ### 2. Command-K Spotlight AI Search
 ![AI Search Preview](docs/screenshots/ai-search.png)
 
-### 3. Product Details & AI Rationale
+### 3. Personal Recommendations Feed
+![Recommendations Preview](docs/screenshots/homepage.png)
+
+### 4. Product Details & AI Rationale
 ![Product Detail Preview](docs/screenshots/product-detail.png)
 
-### 4. Shopping Cart Experience
+### 5. Shopping Cart Experience
 ![Cart Preview](docs/screenshots/cart.png)
 
-### 5. Streamlined Checkout Flow
+### 6. Streamlined Checkout Flow
 ![Checkout Preview](docs/screenshots/checkout.png)
 
-### 6. Admin Analytics Dashboard
+### 7. Admin Analytics Dashboard
 ![Admin Dashboard Preview](docs/screenshots/admin-dashboard.png)
 
 ---
@@ -311,7 +315,7 @@ npm install
 # Push database schema & generate Prisma Client
 npx prisma db push
 
-# Seed database with flagship products across Apple, Asus, Sony, Samsung, Lenovo, Razer, Philips, Dell
+# Seed database with 18 flagship products across 8 brands (Apple, Asus, Sony, Samsung, Lenovo, Razer, Philips, Dell)
 node prisma/seed.js
 
 # Launch backend development server
