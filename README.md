@@ -7,7 +7,9 @@
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-1.5_Flash-8E44AD?logo=google&logoColor=white)](https://ai.google.dev/)
 [![JWT Auth](https://img.shields.io/badge/JWT-Protected-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Hackathon](https://img.shields.io/badge/Hackathon-AI_BUILD_2026-FF5722?logo=rocket&logoColor=white)](#-hackathon-information)
+[![Track](https://img.shields.io/badge/Track-7_Discovery_Engine-blue.svg)](#-hackathon-information)
 
 An AI-powered product discovery and personalized recommendation platform that transforms traditional static keyword search into a real-time, intent-aware shopping experience.
 
@@ -15,7 +17,7 @@ An AI-powered product discovery and personalized recommendation platform that tr
 
 ## 🎯 Project Objective
 
-Traditional e-commerce platforms rely heavily on exact keyword matching. When shoppers enter natural language requests like *"lightweight laptop for coding and video editing under ₹1,000,000"* or *"gaming setup for immersive audio"*, keyword search engines often return irrelevant results or empty pages.
+Traditional e-commerce platforms rely heavily on exact keyword matching. When shoppers enter natural language requests like *"lightweight laptop for coding and video editing under ₹100,000"* or *"gaming setup for immersive audio"*, static keyword search engines often return irrelevant results or empty pages.
 
 **AI Discovery Engine** solves this by:
 1. **Understanding Natural Language Intent**: Parsing intent, budget limits, target categories, and specification requirements using **Google Gemini 1.5 Flash**.
@@ -38,18 +40,18 @@ This project was developed for **AI BUILD 2026**:
 
 ```mermaid
 flowchart TD
-    User([👤 User / Shopper]) <-->|HTTPS / JSON| Frontend[⚛️ React 18 + Vite Frontend]
-    Frontend <-->|REST API / Axios| Backend[🚀 Express.js API Server]
+    User["User / Shopper"] <-->|HTTPS / JSON| Frontend["React 18 + Vite Frontend"]
+    Frontend <-->|REST API / Axios| Backend["Express.js API Server"]
     
-    subgraph Core AI & Discovery Logic
-        Backend <--> IntentDet[🧠 Intent Detector Service]
-        Backend <--> RecEngine[⚙️ Multi-Factor Recommendation Engine]
-        Backend <--> BundleEng[📦 Smart Bundle Engine]
-        Backend <--> Analytics[📈 Analytics & Feedback Service]
+    subgraph Core_Services["Core Platform Services"]
+        Backend <--> IntentDet["Intent Detector Service"]
+        Backend <--> RecEngine["Multi-Factor Recommendation Engine"]
+        Backend <--> BundleEng["Smart Bundle Engine"]
+        Backend <--> Analytics["Analytics & Feedback Service"]
     end
 
-    Backend <-->|@google/generative-ai| Gemini[✨ Google Gemini 1.5 Flash AI API]
-    Backend <-->|Prisma ORM| DB[(💾 SQLite Database / dev.db)]
+    Backend <-->|@google/generative-ai| Gemini["Google Gemini 1.5 Flash AI"]
+    Backend <-->|Prisma ORM| DB[("SQLite Database (dev.db)")]
 
     IntentDet -->|Extract Intent & Category| RecEngine
     RecEngine -->|Compute Composite Score| Frontend
@@ -64,10 +66,12 @@ Candidates are evaluated through a **Multi-Factor Scoring Formula** generating a
 
 $$S = (0.35 \times S_{\text{intent}}) + (0.25 \times S_{\text{sim}}) + (0.20 \times S_{\text{cat}}) + (0.10 \times S_{\text{brand}}) + (0.10 \times S_{\text{pop}})$$
 
+> *Note: The weights are heuristic values chosen for this prototype to prioritize real-time user intent. In a production environment these weights would be optimized using historical user interactions, offline evaluation and A/B testing.*
+
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Shopper
+    actor Shopper as User / Shopper
     participant Client as React App
     participant API as Express Controller
     participant Engine as Recommendation Engine
@@ -88,7 +92,7 @@ sequenceDiagram
     Engine->>Engine: Calculate S = (W_intent * S_intent) + (W_sim * S_sim) + ...
     Engine-->>API: Ranked Recommendations with Match %
     API-->>Client: JSON Response (Items + AI Rationales + Confidence Meters)
-    Client->>Shopper: Render Apple / Perplexity Style Discovery UI
+    Client->>Shopper: Render Discovery UI
     Shopper->>Client: Interacts (Click / Cart / Purchase / Dismiss)
     Client->>API: POST /api/admin/analytics/track-recommendation
     API->>DB: Record Event & Update Affinity Weights
@@ -96,7 +100,7 @@ sequenceDiagram
 
 ---
 
-## 🌟 Key Features
+## 🌟 Features Overview
 
 ### 🧠 AI & Recommendation Features
 - **Natural Language Intent Parsing**: Concurrently extracts intent tags, budget caps, category constraints, and brand preferences.
@@ -109,12 +113,12 @@ sequenceDiagram
 
 ### 🛒 Shopping Experience Features
 - **Command-K Spotlight AI Search**: Overlay modal with interactive quick-prompt shortcuts, Gemini thinking animation, and intent breakdown chips.
-- **Apple Store / Nike Product Cards**: Soft rounded corners (`22px`), smooth image hover zoom (`scale(1.06)`), micro-shadows, and elegant AI rationale badges.
+- **Apple Store / Nike Style Product Cards**: Soft rounded corners (`22px`), smooth image hover zoom (`scale(1.06)`), micro-shadows, and elegant AI rationale badges.
 - **Interactive Product Details**: Multi-image preview gallery with hover zoom, technical specification tables, glass AI rationale cards, and horizontal snap-scroll carousels.
-- **Streamlined Apple / Amazon Style Checkout**: Delivery address form, order summary sidebar, default *Cash on Delivery* payment option, and order success confirmation page with estimated delivery dates.
+- **Streamlined Checkout Flow**: Delivery address form, order summary sidebar, default *Cash on Delivery* payment option, and order success confirmation page with estimated delivery dates.
 
-### 📊 Enterprise Admin & Analytics Features
-- **Enterprise Dashboard**: High-level overview KPIs (*Users, Revenue, Orders, Active Products*).
+### 📊 Admin & Analytics Features
+- **Management Dashboard**: Overview KPIs (*Users, Revenue, Orders, Active Products*).
 - **Search Analytics**: Top searched terms bar chart, zero-inventory demand alerts, search conversion %, AI usage %, and response latency metrics.
 - **Customer Journey Funnel**: 6-stage conversion tracking (`Home → Search → Product View → Wishlist → Cart → Purchase`) with drop-off percentages.
 - **Recommendation Feedback Loop**: Real-time tracking of recommendation events (`SHOWN`, `CLICKED`, `CARTED`, `PURCHASED`, `DISMISSED`) and CTR % metrics.
@@ -133,8 +137,8 @@ sequenceDiagram
 | **Frontend Framework** | **React 18.3** | Component-driven user interface |
 | **Build Tool** | **Vite 5.4** | High-speed ESM bundler and HMR server |
 | **Routing** | **React Router DOM 6.22** | Client-side page navigation & protected routes |
-| **Styling** | **Vanilla CSS Tokens** | Custom design system (`index.css`) with Apple/Vercel aesthetics |
-| **Data Visualization** | **Recharts 2.12** | Enterprise analytics charts & funnel visualizations |
+| **Styling** | **Vanilla CSS Tokens** | Custom design system (`index.css`) with modern aesthetics |
+| **Data Visualization** | **Recharts 2.12** | Analytics charts & funnel visualizations |
 | **Icons** | **Lucide React 0.344** | Modern vector icon system |
 | **Backend Runtime** | **Node.js v18+** | Server-side JavaScript environment |
 | **Web Framework** | **Express.js 4.19** | REST API routing and middleware pipeline |
@@ -148,6 +152,8 @@ sequenceDiagram
 
 ```
 Discovery Engine/
+├── docs/
+│   └── screenshots/              # Real application screenshots
 ├── backend/
 │   ├── prisma/
 │   │   ├── schema.prisma         # Database schemas & relationship definitions
@@ -177,6 +183,7 @@ Discovery Engine/
 │   ├── index.html
 │   ├── vite.config.js
 │   └── package.json
+├── LICENSE
 ├── README.md
 └── .gitignore
 ```
@@ -223,13 +230,13 @@ Discovery Engine/
 | `POST` | `/api/orders/checkout` | Protected | Place customer order (Cash on Delivery) |
 | `GET` | `/api/orders/my-orders` | Protected | List customer order history |
 
-### Admin Analytics & Product Management
+### Admin Analytics & Catalog Management
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
 | `POST` | `/api/admin/products` | Admin | Create a new catalog product |
 | `PUT` | `/api/admin/products/:id` | Admin | Update existing product details |
 | `DELETE` | `/api/admin/products/:id` | Admin | Remove product from catalog |
-| `GET` | `/api/admin/analytics/overview` | Admin | Retrieve enterprise KPI overview metrics |
+| `GET` | `/api/admin/analytics/overview` | Admin | Retrieve KPI overview metrics |
 | `GET` | `/api/admin/analytics/search` | Admin | Retrieve search term analytics & zero-inventory alerts |
 | `GET` | `/api/admin/analytics/journey` | Admin | Retrieve customer conversion funnel metrics |
 | `GET` | `/api/admin/analytics/recommendations` | Admin | Retrieve recommendation feedback loop & CTR % metrics |
@@ -238,17 +245,25 @@ Discovery Engine/
 
 ## 🖼️ Application Screenshots
 
-> *Note: Place screenshots of your live application inside a `docs/screenshots/` folder in your repository to display them here.*
+*All screenshots are stored in the `docs/screenshots/` folder.*
 
-| Section | Screenshot Preview |
-|---|---|
-| **Funded AI Startup Landing Page** | ![Homepage Preview](docs/screenshots/homepage.png) |
-| **Command-K Spotlight AI Search** | ![AI Search Preview](docs/screenshots/ai-search.png) |
-| **Rich AI Product Details Page** | ![Product Detail Preview](docs/screenshots/product-detail.png) |
-| **Personalized Recommendations Feed** | ![Recommendations Preview](docs/screenshots/recommendations.png) |
-| **Shopping Cart Experience** | ![Cart Preview](docs/screenshots/cart.png) |
-| **Minimal Apple / Amazon Style Checkout** | ![Checkout Preview](docs/screenshots/checkout.png) |
-| **Enterprise Admin Analytics Dashboard** | ![Admin Dashboard Preview](docs/screenshots/admin-dashboard.png) |
+### 1. Landing Page
+![Homepage Preview](docs/screenshots/homepage.png)
+
+### 2. Command-K Spotlight AI Search
+![AI Search Preview](docs/screenshots/ai-search.png)
+
+### 3. Product Details & AI Rationale
+![Product Detail Preview](docs/screenshots/product-detail.png)
+
+### 4. Shopping Cart Experience
+![Cart Preview](docs/screenshots/cart.png)
+
+### 5. Streamlined Checkout Flow
+![Checkout Preview](docs/screenshots/checkout.png)
+
+### 6. Admin Analytics Dashboard
+![Admin Dashboard Preview](docs/screenshots/admin-dashboard.png)
 
 ---
 
@@ -326,7 +341,7 @@ npm run dev
 | Portal | Email | Password | Role & Permissions |
 |---|---|---|---|
 | **Customer Portal** | `user@discovery.ai` | `password123` | Personal recommendations, Wishlist, Cart, Checkout, User Profile |
-| **Admin Dashboard** | `admin@discovery.ai` | `password123` | Enterprise Analytics, Inventory CRUD, Funnel Metrics, Feedback Loop |
+| **Admin Dashboard** | `admin@discovery.ai` | `password123` | Analytics overview, Inventory CRUD, Funnel Metrics, Feedback Loop |
 
 ---
 
