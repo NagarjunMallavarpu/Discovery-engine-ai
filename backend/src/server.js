@@ -16,22 +16,27 @@ const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
-// Middlewares
+// Configured CORS Origins (Production FRONTEND_URL + Localhost for dev)
+const allowedOrigins = [
+  config.FRONTEND_URL,
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:5173'
+].filter(Boolean).map(url => url.replace(/\/$/, ''));
+
 app.use(cors({
-  origin: '*',
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    const normalizedOrigin = origin.replace(/\/$/, '');
+    if (allowedOrigins.includes(normalizedOrigin) || config.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS not allowed for origin: ${origin}`));
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  next();
-});
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -49,7 +54,7 @@ app.get('/', (req, res) => {
     message: 'AI Discovery Engine API Server is active',
     status: 'online',
     version: '1.0.0',
-    frontend: 'http://localhost:5173',
+    frontend: config.FRONTEND_URL || 'http://localhost:5173',
     health: '/api/health'
   });
 });
@@ -74,7 +79,7 @@ app.get('/api', (req, res) => {
   });
 });
 
-// Health check
+// Health check endpoint for Render monitoring
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
