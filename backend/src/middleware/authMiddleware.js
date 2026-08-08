@@ -6,7 +6,7 @@ async function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
-  if (!token) {
+  if (!token || token === 'undefined' || token === 'null') {
     req.user = null; // Anonymous user allowed for public endpoints
     return next();
   }
@@ -21,7 +21,10 @@ async function authenticateToken(req, res, next) {
     req.user = user || null;
     next();
   } catch (err) {
-    return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+    // If token verification fails (expired or invalid), treat as unauthenticated
+    // Protected routes will enforce authentication via requireAuth middleware
+    req.user = null;
+    next();
   }
 }
 

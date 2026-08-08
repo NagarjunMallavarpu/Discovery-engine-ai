@@ -201,7 +201,24 @@ exports.deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    await prisma.product.delete({ where: { id } });
+    const existingProduct = await prisma.product.findFirst({
+      where: {
+        OR: [{ id }, { slug: id }]
+      }
+    });
+
+    if (!existingProduct) {
+      return res.status(404).json({ success: false, message: 'Product not found' });
+    }
+
+    await prisma.$transaction([
+      prisma.productImage.deleteMany({ where: { productId: existingProduct.id } }),
+      prisma.cartItem.deleteMany({ where: { productId: existingProduct.id } }),
+      prisma.wishlist.deleteMany({ where: { productId: existingProduct.id } }),
+      prisma.viewHistory.deleteMany({ where: { productId: existingProduct.id } }),
+      prisma.recommendation.deleteMany({ where: { productId: existingProduct.id } }),
+      prisma.product.delete({ where: { id: existingProduct.id } })
+    ]);
 
     res.json({
       success: true,

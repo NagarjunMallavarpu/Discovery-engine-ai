@@ -17,16 +17,24 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
   next();
 });
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
-
 
 if (config.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -34,14 +42,27 @@ if (config.NODE_ENV === 'development') {
 
 const { authenticateToken } = require('./middleware/authMiddleware');
 
-// Handle chrome devtools well-known ping and favicon gracefully
-app.get('/.well-known/*', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.status(204).end();
+// Handle root URL GET /
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'AI Discovery Engine API Server is active',
+    status: 'online',
+    version: '1.0.0',
+    frontend: 'http://localhost:5173',
+    health: '/api/health'
+  });
 });
-app.get('/favicon.ico', (req, res) => res.status(204).end());
 
+// Handle Chrome DevTools and browser well-known pings gracefully
+app.all('/.well-known/*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, HEAD');
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).json({});
+});
+
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // API Root status endpoint
 app.get('/api', (req, res) => {
@@ -62,7 +83,6 @@ app.get('/api/health', (req, res) => {
     aiEngine: config.GEMINI_API_KEY ? 'Gemini 2.5 Active' : 'Heuristic Fallback Active'
   });
 });
-
 
 // Authenticate JWT Token for all requests if provided
 app.use(authenticateToken);

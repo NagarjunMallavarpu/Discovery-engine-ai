@@ -1,77 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 :root {
   /* Minimal Enterprise Color Palette - Light Mode */
-  --bg-main: #fcfcfd;
+  --bg-main: #f8fafc;
   --bg-surface: #ffffff;
-  --bg-surface-hover: #f4f4f5;
+  --bg-surface-hover: #f1f5f9;
   --bg-card: #ffffff;
-  --border-color: #e4e4e7;
-  --border-subtle: #d4d4d8;
+  --border-color: #e2e8f0;
+  --border-subtle: #cbd5e1;
 
-  --text-main: #09090b;
-  --text-muted: #71717a;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
   --text-inverse: #ffffff;
 
-  --accent-primary: #18181b;
-  --accent-primary-hover: #27272a;
-  --accent-secondary: #09090b;
+  --accent-primary: #0f172a;
+  --accent-primary-hover: #1e293b;
+  --accent-secondary: #0f172a;
   --accent-amazon: #f59e0b;
 
-  /* Refined AI Accents & Gradients */
+  /* Refined AI Accents & Cybernetic Gradients */
   --accent-ai: #6366f1;
-  --accent-ai-glow: rgba(99, 102, 241, 0.2);
+  --accent-ai-glow: rgba(99, 102, 241, 0.22);
   --accent-ai-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  --accent-ai-gradient-hover: linear-gradient(135deg, #4f46e5 0%, #9333ea 50%, #db2777 100%);
   --badge-ai-bg: rgba(99, 102, 241, 0.08);
-  --badge-ai-border: rgba(99, 102, 241, 0.25);
+  --badge-ai-border: rgba(99, 102, 241, 0.28);
 
-  --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 6px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 16px 36px -8px rgba(0, 0, 0, 0.09);
-  --shadow-ai: 0 0 30px rgba(99, 102, 241, 0.2);
+  --shadow-sm: 0 2px 4px 0 rgba(15, 23, 42, 0.03);
+  --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 40px -12px rgba(15, 23, 42, 0.12);
+  --shadow-ai: 0 0 35px rgba(99, 102, 241, 0.22);
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-full: 9999px;
 
   --font-main: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
 }
 
 [data-theme="dark"] {
-  /* Dark Mode - Awwwards / Linear / Apple Inspired */
-  --bg-main: #09090b;
-  --bg-surface: #121215;
-  --bg-surface-hover: #1c1c21;
-  --bg-card: #121215;
-  --border-color: #27272a;
-  --border-subtle: #3f3f46;
+  /* Dark Mode - Futuristic AI / Vercel / Apple Dark Theme */
+  --bg-main: #060810;
+  --bg-surface: #0e121d;
+  --bg-surface-hover: #171d2e;
+  --bg-card: #0d111c;
+  --border-color: #1e293b;
+  --border-subtle: #334155;
 
-  --text-main: #f4f4f5;
-  --text-muted: #a1a1aa;
-  --text-inverse: #09090b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-inverse: #060810;
 
-  --accent-primary: #f4f4f5;
+  --accent-primary: #f8fafc;
   --accent-primary-hover: #ffffff;
-  --accent-secondary: #f4f4f5;
+  --accent-secondary: #f8fafc;
   --accent-amazon: #f59e0b;
 
   --accent-ai: #818cf8;
-  --accent-ai-glow: rgba(129, 140, 248, 0.3);
-  --badge-ai-bg: rgba(129, 140, 248, 0.12);
-  --badge-ai-border: rgba(129, 140, 248, 0.28);
+  --accent-ai-glow: rgba(129, 140, 248, 0.35);
+  --badge-ai-bg: rgba(129, 140, 248, 0.14);
+  --badge-ai-border: rgba(129, 140, 248, 0.35);
 
-  --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 6px 16px -2px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 16px 36px -8px rgba(0, 0, 0, 0.65);
-  --shadow-ai: 0 0 35px rgba(129, 140, 248, 0.28);
+  --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 20px 45px -10px rgba(0, 0, 0, 0.75);
+  --shadow-ai: 0 0 45px rgba(129, 140, 248, 0.32);
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* Lenis Smooth Scroll Setup */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
@@ -101,10 +120,10 @@ button, input, select, textarea {
   font-family: inherit;
 }
 
-/* Scrollbar styling */
+/* Custom Sleek Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-main);
@@ -114,34 +133,45 @@ button, input, select, textarea {
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--accent-ai);
 }
 
 /* --- KEYFRAME ANIMATIONS & AMBIENT EFFECTS --- */
 @keyframes floatSlow {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-14px) rotate(1.2deg); }
+  50% { transform: translateY(-12px) rotate(0.8deg); }
 }
 
 @keyframes floatDelay {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(12px) rotate(-1.2deg); }
+  50% { transform: translateY(10px) rotate(-0.8deg); }
 }
 
 @keyframes pulseGlow {
   0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 0.95; transform: scale(1.06); }
+  50% { opacity: 1; transform: scale(1.05); }
 }
 
 @keyframes borderGlow {
-  0% { border-color: rgba(99, 102, 241, 0.3); }
-  50% { border-color: rgba(168, 85, 247, 0.5); }
-  100% { border-color: rgba(99, 102, 241, 0.3); }
+  0% { border-color: rgba(99, 102, 241, 0.35); box-shadow: 0 0 15px rgba(99, 102, 241, 0.15); }
+  50% { border-color: rgba(168, 85, 247, 0.6); box-shadow: 0 0 25px rgba(168, 85, 247, 0.25); }
+  100% { border-color: rgba(99, 102, 241, 0.35); box-shadow: 0 0 15px rgba(99, 102, 241, 0.15); }
+}
+
+@keyframes laserPulse {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 .animate-float-slow {
@@ -153,35 +183,35 @@ button, input, select, textarea {
 }
 
 .pulse-ai {
-  animation: pulseGlow 3s infinite ease-in-out;
+  animation: pulseGlow 2.5s infinite ease-in-out;
 }
 
 .spin {
   animation: spin 0.8s linear infinite;
 }
 
-/* Glassmorphism 2.0 */
+/* Glassmorphism 3.0 */
 .glass-panel {
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(228, 228, 231, 0.8);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 [data-theme="dark"] .glass-panel {
-  background: rgba(18, 18, 21, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(14, 18, 29, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Ambient Backdrop Lighting Blobs */
-.bg-blob-purple {
+/* Ambient Backdrop Mesh Lights */
+.hero-mesh-glow {
   position: absolute;
   top: -120px;
-  right: -80px;
-  width: 650px;
-  height: 650px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(168, 85, 247, 0.15) 45%, rgba(0, 0, 0, 0) 70%);
-  filter: blur(70px);
+  right: -100px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, rgba(168, 85, 247, 0.14) 40%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(80px);
   pointer-events: none;
   z-index: 0;
 }
@@ -190,10 +220,10 @@ button, input, select, textarea {
   position: absolute;
   bottom: -100px;
   left: -80px;
-  width: 550px;
-  height: 550px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, rgba(99, 102, 241, 0.12) 45%, rgba(0, 0, 0, 0) 70%);
-  filter: blur(70px);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(99, 102, 241, 0.1) 45%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(80px);
   pointer-events: none;
   z-index: 0;
 }
@@ -209,9 +239,9 @@ button, input, select, textarea {
 }
 
 .ai-glow-card:hover {
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), 0 0 25px var(--accent-ai-glow);
   border-color: var(--badge-ai-border);
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 }
 
 .glow-border-animated {
@@ -233,7 +263,7 @@ button, input, select, textarea {
 
 /* Container */
 .container {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -266,13 +296,14 @@ button, input, select, textarea {
 
 .btn-ai {
   background: var(--accent-ai-gradient);
+  background-size: 200% 200%;
   color: #ffffff;
   box-shadow: 0 4px 20px var(--accent-ai-glow);
 }
 .btn-ai:hover {
-  opacity: 0.95;
+  background: var(--accent-ai-gradient-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px var(--accent-ai-glow);
+  box-shadow: 0 8px 30px var(--accent-ai-glow);
 }
 
 .btn-outline {
@@ -283,6 +314,30 @@ button, input, select, textarea {
 .btn-outline:hover {
   background: var(--bg-surface-hover);
   border-color: var(--border-subtle);
+  transform: translateY(-1px);
+}
+
+/* Interactive Prompt Chips */
+.prompt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.prompt-chip:hover {
+  background: var(--badge-ai-bg);
+  border-color: var(--badge-ai-border);
+  color: var(--accent-ai);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--accent-ai-glow);
 }
 
 /* Badges */
@@ -290,7 +345,7 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.68rem;
+  padding: 0.28rem 0.75rem;
   font-size: 0.73rem;
   font-weight: 700;
   border-radius: var(--radius-full);
@@ -305,21 +360,16 @@ button, input, select, textarea {
 .badge-success {
   background: rgba(16, 185, 129, 0.1);
   color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .badge-warning {
   background: rgba(245, 158, 11, 0.1);
   color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.25);
 }
 
 /* Skeleton Shimmer */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
 .skeleton {
   background: linear-gradient(90deg, var(--bg-surface-hover) 25%, var(--border-color) 50%, var(--bg-surface-hover) 75%);
   background-size: 200% 100%;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Search, ArrowRight, Zap, Cpu, ShieldCheck, Flame, Layers, Activity, CheckCircle2, PackageCheck } from 'lucide-react';
+import { Sparkles, Search, ArrowRight, Zap, Cpu, ShieldCheck, Flame, Layers, Activity, CheckCircle2, PackageCheck, Smartphone, Laptop, Gamepad2, Headphones, Monitor, Compass } from 'lucide-react';
 import API from '../services/api';
 import ProductCard from '../components/ProductCard';
 import CompleteTheLookBundle from '../components/CompleteTheLookBundle';
@@ -12,6 +12,13 @@ export default function Home({ onOpenAISearch }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [bundleData, setBundleData] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const samplePrompts = [
+    { label: '⚡ Gaming Laptop under ₹1.5L', query: 'gaming laptop under 150000 with RTX graphics' },
+    { label: '🎧 Audiophile ANC Headphones', query: 'noise canceling wireless headphones for travel' },
+    { label: '📱 Flagship Titanium Smartphone', query: 'flagship camera smartphone titanium build' },
+    { label: '🖥️ Curved OLED Desk Setup', query: 'ultrawide curved OLED gaming monitor' }
+  ];
 
   useEffect(() => {
     fetchHomeData();
@@ -67,6 +74,16 @@ export default function Home({ onOpenAISearch }) {
     }
   };
 
+  const getCategoryIcon = (slug) => {
+    switch (slug) {
+      case 'laptops': return <Laptop size={15} />;
+      case 'smartphones': return <Smartphone size={15} />;
+      case 'gaming': return <Gamepad2 size={15} />;
+      case 'audio': return <Headphones size={15} />;
+      case 'smart-home': return <Monitor size={15} />;
+      default: return <Compass size={15} />;
+    }
+  };
 
   return (
     <div style={{ position: 'relative', overflowX: 'hidden' }}>
@@ -80,6 +97,7 @@ export default function Home({ onOpenAISearch }) {
       }}>
         {/* Ambient Radial Mesh Lighting Backdrop */}
         <div className="hero-mesh-glow" />
+        <div className="bg-blob-indigo" />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{
@@ -91,8 +109,8 @@ export default function Home({ onOpenAISearch }) {
             {/* Left Column: Hero Copy & Actions */}
             <div>
               {/* AI Badge */}
-              <div className="badge badge-ai" style={{ marginBottom: '1.25rem', padding: '0.35rem 0.85rem', fontSize: '0.78rem' }}>
-                <Sparkles size={14} className="pulse-ai" /> Powered by Gemini 1.5 Flash & Intent Detector
+              <div className="badge badge-ai pulse-ai" style={{ marginBottom: '1.25rem', padding: '0.35rem 0.85rem', fontSize: '0.78rem' }}>
+                <Sparkles size={14} /> Powered by Gemini 1.5 Flash & Intent Detector
               </div>
 
               {/* Huge Headline */}
@@ -112,24 +130,41 @@ export default function Home({ onOpenAISearch }) {
                 color: 'var(--text-muted)',
                 lineHeight: 1.55,
                 maxWidth: '520px',
-                marginBottom: '2rem'
+                marginBottom: '1.75rem'
               }}>
-                AI that understands what you actually need. Real-time intent parsing, multi-factor confidence scoring, and automated ecosystem bundling.
+                AI that understands what you actually need. Real-time natural language intent parsing, multi-factor confidence scoring, and automated ecosystem bundling.
               </p>
 
               {/* Action Buttons */}
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
-                <button onClick={onOpenAISearch} className="btn btn-ai" style={{ padding: '0.85rem 1.6rem', fontSize: '0.95rem' }}>
-                  <Sparkles size={18} /> Start AI Search
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
+                <button onClick={() => onOpenAISearch()} className="btn btn-ai" style={{ padding: '0.85rem 1.6rem', fontSize: '0.95rem' }}>
+                  <Sparkles size={18} className="pulse-ai" /> Start AI Search
                 </button>
                 <Link to="/browse" className="btn btn-outline" style={{ padding: '0.85rem 1.6rem', fontSize: '0.95rem' }}>
                   Browse Catalog <ArrowRight size={16} />
                 </Link>
               </div>
 
+              {/* Quick AI Prompt Shortcut Chips */}
+              <div style={{ marginBottom: '2rem' }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Try asking AI:
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  {samplePrompts.map((p, idx) => (
+                    <button
+                      key={idx}
+                      className="prompt-chip"
+                      onClick={() => onOpenAISearch(p.query)}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Animated Live Stats */}
               <div style={{ display: 'flex', gap: '2rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-color)' }}>
-
                 <div>
                   <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-main)' }}>24+</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Flagship Tech Items</div>
@@ -148,7 +183,7 @@ export default function Home({ onOpenAISearch }) {
             {/* Right Column: 3D Interactive Glass Preview Stage */}
             <div style={{ position: 'relative' }}>
               {/* Main Stage Glass Background */}
-              <div className="glass-panel" style={{
+              <div className="glass-panel glow-border-animated" style={{
                 borderRadius: 'var(--radius-lg)',
                 padding: '1.75rem',
                 boxShadow: 'var(--shadow-lg)',
@@ -166,21 +201,21 @@ export default function Home({ onOpenAISearch }) {
                   background: 'var(--bg-card)',
                   border: '1px solid var(--badge-ai-border)',
                   borderRadius: 'var(--radius-md)',
-                  padding: '1rem',
+                  padding: '1.1rem',
                   boxShadow: 'var(--shadow-ai)',
                   marginBottom: '1rem'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                       <Sparkles size={13} /> 98% Match Score
                     </span>
-                    <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Real-Time Recommendation</span>
+                    <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600 }}>Real-Time Vector Match</span>
                   </div>
-                  <div style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.2rem' }}>
+                  <div style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.25rem' }}>
                     Apple iPhone 15 Pro Max (256GB - Natural Titanium)
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-                    "Matched for high camera affinity and titanium build preference"
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.6rem' }}>
+                    "Matched for high camera affinity, A17 Pro gaming, and titanium build"
                   </div>
                   <div style={{ background: 'var(--bg-surface-hover)', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
                     <div style={{ width: '98%', height: '100%', background: 'var(--accent-ai-gradient)', borderRadius: '3px' }} />
@@ -192,20 +227,20 @@ export default function Home({ onOpenAISearch }) {
                   background: 'var(--bg-surface)',
                   border: '1px solid var(--border-color)',
                   borderRadius: 'var(--radius-md)',
-                  padding: '0.85rem 1rem',
+                  padding: '0.95rem 1.1rem',
                   boxShadow: 'var(--shadow-sm)'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#10b98115', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <PackageCheck size={16} />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.12)', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <PackageCheck size={18} />
                       </div>
                       <div>
-                        <div style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--text-main)' }}>Complete The Look Bundle</div>
+                        <div style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-main)' }}>Complete The Look Bundle</div>
                         <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>4-Piece Ecosystem Package (Saves 10%)</div>
                       </div>
                     </div>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981' }}>-₹35,379</span>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#10b981' }}>-₹35,379</span>
                   </div>
                 </div>
               </div>
@@ -230,44 +265,44 @@ export default function Home({ onOpenAISearch }) {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
             {/* Bento Card 1 */}
             <div className="ai-glow-card" style={{ padding: '1.75rem' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--badge-ai-bg)', color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+              <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'var(--badge-ai-bg)', color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.1rem' }}>
                 <Search size={22} />
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.5rem' }}>Natural Language Intent Search</h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>
                 Type queries like "gaming laptop under ₹70,000" and Gemini automatically extracts category, budget caps, and brand requirements.
               </p>
             </div>
 
             {/* Bento Card 2 */}
             <div className="ai-glow-card" style={{ padding: '1.75rem' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--badge-ai-bg)', color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+              <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'var(--badge-ai-bg)', color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.1rem' }}>
                 <Cpu size={22} />
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.5rem' }}>Multi-Metric Explainable AI</h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>
                 Every recommendation displays transparent Confidence %, Similarity %, and Category Match % scores so you know why an item was chosen.
               </p>
             </div>
 
             {/* Bento Card 3 */}
             <div className="ai-glow-card" style={{ padding: '1.75rem' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--badge-ai-bg)', color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+              <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'var(--badge-ai-bg)', color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.1rem' }}>
                 <Layers size={22} />
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.5rem' }}>Cross-Category Smart Bundles</h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>
                 Automated Frequently Bought Together and Complete The Look bundles pair your primary device with compatible ecosystem accessories.
               </p>
             </div>
 
             {/* Bento Card 4 */}
             <div className="ai-glow-card" style={{ padding: '1.75rem' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--badge-ai-bg)', color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+              <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'var(--badge-ai-bg)', color: 'var(--accent-ai)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.1rem' }}>
                 <Activity size={22} />
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.5rem' }}>Enterprise Analytics & Funnels</h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>
                 Full customer journey funnel tracking, zero-inventory demand alerts, and recommendation feedback loop metrics for admins.
               </p>
             </div>
@@ -291,56 +326,69 @@ export default function Home({ onOpenAISearch }) {
             </Link>
           </div>
 
-          {/* Horizontal Category Pills */}
-          <div style={{ display: 'flex', gap: '0.6rem', overflowX: 'auto', paddingBottom: '0.75rem', marginBottom: '2rem' }}>
+          {/* Horizontal Category Pills with Icons */}
+          <div style={{ display: 'flex', gap: '0.65rem', overflowX: 'auto', paddingBottom: '0.75rem', marginBottom: '2rem' }}>
             <button
               onClick={() => setSelectedCategory('all')}
               style={{
-                background: selectedCategory === 'all' ? 'var(--text-main)' : 'var(--bg-surface)',
-                color: selectedCategory === 'all' ? 'var(--bg-main)' : 'var(--text-muted)',
-                border: '1px solid var(--border-color)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                background: selectedCategory === 'all' ? 'var(--accent-ai-gradient)' : 'var(--bg-surface)',
+                color: selectedCategory === 'all' ? '#ffffff' : 'var(--text-muted)',
+                border: selectedCategory === 'all' ? 'none' : '1px solid var(--border-color)',
                 borderRadius: 'var(--radius-full)',
-                padding: '0.4rem 1rem',
+                padding: '0.45rem 1.1rem',
                 fontSize: '0.82rem',
                 fontWeight: 700,
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                transition: 'all 0.15s'
+                boxShadow: selectedCategory === 'all' ? '0 4px 14px var(--accent-ai-glow)' : 'none',
+                transition: 'all 0.2s ease'
               }}
             >
-              All Feeds
+              <Compass size={15} /> All Feeds
             </button>
-            {categories.map(c => (
-              <button
-                key={c.id}
-                onClick={() => setSelectedCategory(c.slug)}
-                style={{
-                  background: selectedCategory === c.slug ? 'var(--text-main)' : 'var(--bg-surface)',
-                  color: selectedCategory === c.slug ? 'var(--bg-main)' : 'var(--text-muted)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: 'var(--radius-full)',
-                  padding: '0.4rem 1rem',
-                  fontSize: '0.82rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  transition: 'all 0.15s'
-                }}
-              >
-                {c.name}
-              </button>
-            ))}
+
+            {categories.map(c => {
+              const isSelected = selectedCategory === c.slug;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setSelectedCategory(c.slug)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    background: isSelected ? 'var(--accent-ai-gradient)' : 'var(--bg-surface)',
+                    color: isSelected ? '#ffffff' : 'var(--text-muted)',
+                    border: isSelected ? 'none' : '1px solid var(--border-color)',
+                    borderRadius: 'var(--radius-full)',
+                    padding: '0.45rem 1.1rem',
+                    fontSize: '0.82rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    boxShadow: isSelected ? '0 4px 14px var(--accent-ai-glow)' : 'none',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  {getCategoryIcon(c.slug)}
+                  {c.name}
+                </button>
+              );
+            })}
           </div>
 
           {/* Product Grid */}
           {loading ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.35rem' }}>
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="skeleton" style={{ height: '320px', borderRadius: 'var(--radius-md)' }} />
+                <div key={i} className="skeleton" style={{ height: '340px', borderRadius: 'var(--radius-md)' }} />
               ))}
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.35rem' }}>
               {personalizedRecs.map(p => (
                 <ProductCard key={p.id} product={p} />
               ))}
@@ -358,7 +406,7 @@ export default function Home({ onOpenAISearch }) {
               <h2 style={{ fontSize: '1.6rem', fontWeight: 900 }}>Trending Now Across Catalog</h2>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.35rem' }}>
               {trendingRecs.map(p => (
                 <ProductCard key={p.id} product={p} />
               ))}

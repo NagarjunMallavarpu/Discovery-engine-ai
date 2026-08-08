@@ -1,88 +1,90 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Shield } from 'lucide-react';
+import { Sparkles, Shield, Activity, Send } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border-color)', marginTop: '5rem', padding: '3.5rem 0 2rem' }}>
+    <footer style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border-color)', marginTop: '6rem', padding: '4rem 0 2rem' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginBottom: '2.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2.5rem', marginBottom: '3rem' }}>
           {/* Brand Info */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.85rem' }}>
               <div style={{
-                width: '24px', height: '24px', borderRadius: '5px',
-                background: 'var(--text-main)', color: 'var(--bg-main)',
+                width: '28px', height: '28px', borderRadius: '7px',
+                background: 'var(--accent-ai-gradient)', color: '#ffffff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontWeight: 900, fontSize: '0.8rem'
+                fontWeight: 900, fontSize: '0.9rem',
+                boxShadow: '0 4px 12px var(--accent-ai-glow)'
               }}>
                 D
               </div>
-              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.03em' }}>
-                Discovery<span style={{ color: 'var(--accent-ai)' }}>.ai</span>
+              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.15rem', letterSpacing: '-0.03em', color: 'var(--text-main)' }}>
+                Discovery<span className="text-gradient-brand">.ai</span>
               </span>
             </div>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '0.85rem' }}>
-              Enterprise Product Discovery & Personalization Platform powered by Gemini AI.
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.55, marginBottom: '1rem' }}>
+              Next-generation E-Commerce Product Discovery & Personalization Platform powered by Gemini AI.
             </p>
-            <div style={{ display: 'flex', gap: '0.4rem' }}>
-              <span className="badge badge-ai" style={{ fontSize: '0.68rem' }}><Sparkles size={11} /> Gemini 1.5 Flash</span>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <span className="badge badge-ai" style={{ fontSize: '0.72rem' }}><Sparkles size={12} className="pulse-ai" /> Gemini 1.5 Flash</span>
+              <span className="badge badge-success" style={{ fontSize: '0.72rem' }}><Activity size={12} /> Operational</span>
             </div>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 style={{ fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.85rem', color: 'var(--text-main)' }}>
+            <h4 style={{ fontSize: '0.85rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-main)' }}>
               Catalog Navigation
             </h4>
-            <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+            <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
               <li><Link to="/" style={{ color: 'inherit' }}>Home Page</Link></li>
               <li><Link to="/browse" style={{ color: 'inherit' }}>Browse Catalog</Link></li>
-              <li><Link to="/browse?category=laptops" style={{ color: 'inherit' }}>Laptops</Link></li>
-              <li><Link to="/browse?category=audio" style={{ color: 'inherit' }}>Audio</Link></li>
-              <li><Link to="/browse?category=gaming" style={{ color: 'inherit' }}>Gaming</Link></li>
-              <li><Link to="/browse?category=smartphones" style={{ color: 'inherit' }}>Smartphones</Link></li>
+              <li><Link to="/browse?category=laptops" style={{ color: 'inherit' }}>Laptops & Workstations</Link></li>
+              <li><Link to="/browse?category=audio" style={{ color: 'inherit' }}>Audiophile Audio</Link></li>
+              <li><Link to="/browse?category=gaming" style={{ color: 'inherit' }}>Gaming Ecosystems</Link></li>
+              <li><Link to="/browse?category=smartphones" style={{ color: 'inherit' }}>Flagship Smartphones</Link></li>
             </ul>
-
           </div>
 
           {/* Intelligence Capabilities */}
           <div>
-            <h4 style={{ fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.85rem', color: 'var(--text-main)' }}>
-              AI Engine
+            <h4 style={{ fontSize: '0.85rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-main)' }}>
+              AI Capabilities
             </h4>
-            <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
-              <li>Intent Classification</li>
-              <li>Multi-Factor Recommendation</li>
-              <li>Explainable AI Rationale</li>
+            <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+              <li>Real-Time Intent Parsing</li>
+              <li>Multi-Factor Confidence Scoring</li>
+              <li>Explainable AI Rationales</li>
               <li>Ecosystem Smart Bundling</li>
+              <li>Feedback Loop Optimization</li>
             </ul>
           </div>
 
           {/* Admin & Security */}
           <div>
-            <h4 style={{ fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.85rem', color: 'var(--text-main)' }}>
+            <h4 style={{ fontSize: '0.85rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-main)' }}>
               Administration
             </h4>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
-              <div><Link to="/profile" style={{ color: 'inherit' }}>Customer Activity Profile</Link></div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+              <div><Link to="/profile" style={{ color: 'inherit' }}>Customer Activity & Preferences</Link></div>
               <div>
-                <Link to="/admin" style={{ color: 'var(--accent-ai)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <Shield size={13} /> Admin Command Portal
+                <Link to="/admin" style={{ color: 'var(--accent-ai)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <Shield size={14} /> Admin Command Portal
                 </Link>
               </div>
             </div>
           </div>
         </div>
 
-        <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+        <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
           <div>
-            © 2026 AI Discovery Engine. Enterprise Product Personalization Platform.
+            © 2026 Discovery Engine AI. Built with Vite, React & Express.
           </div>
-          <div style={{ display: 'flex', gap: '1.25rem' }}>
-            <span>Privacy</span>
-            <span>Terms</span>
-            <span>API Docs</span>
+          <div style={{ display: 'flex', gap: '1.5rem', fontWeight: 500 }}>
+            <span style={{ cursor: 'pointer' }}>Privacy Policy</span>
+            <span style={{ cursor: 'pointer' }}>Terms of Service</span>
+            <span style={{ cursor: 'pointer' }}>API Specification</span>
           </div>
         </div>
       </div>

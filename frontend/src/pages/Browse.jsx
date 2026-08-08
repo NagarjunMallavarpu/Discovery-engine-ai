@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Filter, SlidersHorizontal, ArrowUpDown, X, Sparkles } from 'lucide-react';
+import { Filter, SlidersHorizontal, ArrowUpDown, X, Sparkles, Check, RotateCcw } from 'lucide-react';
 import API from '../services/api';
 import ProductCard from '../components/ProductCard';
 
@@ -100,36 +100,40 @@ export default function Browse() {
 
   const brandsList = ['Apple', 'Asus', 'Sony', 'Samsung', 'Lenovo', 'Razer', 'Philips', 'Dell', 'Logitech', 'Bose', 'Roborock', 'Keychron'];
 
+  const hasActiveFilters = selectedCategory || selectedBrand || searchTerm || maxPrice !== '500000';
+
   return (
-    <div className="container" style={{ padding: '2rem 1.5rem 4rem' }}>
+    <div className="container" style={{ padding: '2.5rem 1.5rem 5rem' }}>
       {/* Header Title */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800 }}>Product Discovery Catalog</h1>
-          <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-            Showing {products.length} items {selectedCategory ? `in ${selectedCategory}` : ''} {searchTerm ? `for "${searchTerm}"` : ''}
+          <h1 style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '-0.03em' }}>Product Discovery Catalog</h1>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+            Showing {products.length} products {selectedCategory ? `in ${selectedCategory}` : ''} {searchTerm ? `matching "${searchTerm}"` : ''}
           </p>
         </div>
 
         {/* Sort Dropdown */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <ArrowUpDown size={16} style={{ color: 'var(--text-muted)' }} />
-          <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Sort By:</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <ArrowUpDown size={16} style={{ color: 'var(--accent-ai)' }} />
+          <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>Sort By:</span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             style={{
-              padding: '0.5rem 1rem',
+              padding: '0.55rem 1.1rem',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--border-color)',
               background: 'var(--bg-surface)',
               color: 'var(--text-main)',
               fontSize: '0.85rem',
+              fontWeight: 600,
               outline: 'none',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: 'var(--shadow-sm)'
             }}
           >
-            <option value="relevance">AI Relevance & Rating</option>
+            <option value="relevance">✨ AI Relevance & Rating</option>
             <option value="price_asc">Price: Low to High</option>
             <option value="price_desc">Price: High to Low</option>
             <option value="rating">Highest Rated</option>
@@ -138,54 +142,86 @@ export default function Browse() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '2rem' }}>
+      {/* Active Filter Chips */}
+      {hasActiveFilters && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem', background: 'var(--bg-surface)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+          <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)' }}>Active Filters:</span>
+          {selectedCategory && (
+            <span className="badge badge-ai" style={{ cursor: 'pointer' }} onClick={() => handleCategorySelect('')}>
+              Category: {selectedCategory} <X size={12} />
+            </span>
+          )}
+          {selectedBrand && (
+            <span className="badge badge-warning" style={{ cursor: 'pointer' }} onClick={() => handleBrandSelect(selectedBrand)}>
+              Brand: {selectedBrand} <X size={12} />
+            </span>
+          )}
+          {searchTerm && (
+            <span className="badge badge-success" style={{ cursor: 'pointer' }} onClick={() => { setSearchTerm(''); const p = new URLSearchParams(searchParams); p.delete('search'); setSearchParams(p); }}>
+              Query: "{searchTerm}" <X size={12} />
+            </span>
+          )}
+          {maxPrice !== '500000' && (
+            <span className="badge badge-ai" style={{ cursor: 'pointer' }} onClick={() => setMaxPrice('500000')}>
+              Max Budget: ₹{parseInt(maxPrice, 10).toLocaleString('en-IN')} <X size={12} />
+            </span>
+          )}
+          <button onClick={handleResetFilters} style={{ marginLeft: 'auto', background: 'transparent', border: 'none', color: '#ef4444', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+            <RotateCcw size={12} /> Reset All
+          </button>
+        </div>
+      )}
+
+      <div style={{ display: 'grid', gridTemplateColumns: '270px 1fr', gap: '2rem' }}>
         {/* Sidebar Filters */}
-        <aside style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', padding: '1.25rem', height: 'fit-content' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem', marginBottom: '1.25rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '0.95rem' }}>
-              <Filter size={18} /> Catalog Filters
+        <aside style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '1.5rem', height: 'fit-content', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.85rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', fontWeight: 900, fontSize: '1rem', color: 'var(--text-main)' }}>
+              <Filter size={18} style={{ color: 'var(--accent-ai)' }} /> Filters
             </div>
-            <button onClick={handleResetFilters} style={{ background: 'transparent', border: 'none', color: 'var(--accent-primary)', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}>
-              Reset All
+            <button onClick={handleResetFilters} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}>
+              Reset
             </button>
           </div>
 
           {/* Search Input */}
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.5rem' }}>Keyword Search</label>
+          <div style={{ marginBottom: '1.75rem' }}>
+            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-main)' }}>Keyword Search</label>
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Title, brand, tag..."
+              placeholder="Title, brand, feature..."
               style={{
                 width: '100%',
-                padding: '0.5rem 0.75rem',
-                borderRadius: 'var(--radius-sm)',
+                padding: '0.55rem 0.85rem',
+                borderRadius: 'var(--radius-md)',
                 border: '1px solid var(--border-color)',
                 background: 'var(--bg-main)',
                 color: 'var(--text-main)',
-                fontSize: '0.85rem'
+                fontSize: '0.85rem',
+                outline: 'none'
               }}
             />
           </div>
 
           {/* Category Filter */}
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.5rem' }}>Category</label>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+          <div style={{ marginBottom: '1.75rem' }}>
+            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, marginBottom: '0.6rem', color: 'var(--text-main)' }}>Category</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <button
                 onClick={() => handleCategorySelect('')}
                 style={{
                   textAlign: 'left',
                   background: !selectedCategory ? 'var(--badge-ai-bg)' : 'transparent',
                   color: !selectedCategory ? 'var(--accent-ai)' : 'var(--text-muted)',
-                  border: 'none',
-                  padding: '0.35rem 0.5rem',
-                  borderRadius: 'var(--radius-sm)',
+                  border: !selectedCategory ? '1px solid var(--badge-ai-border)' : '1px solid transparent',
+                  padding: '0.45rem 0.75rem',
+                  borderRadius: 'var(--radius-md)',
                   fontSize: '0.85rem',
-                  fontWeight: !selectedCategory ? 700 : 500,
-                  cursor: 'pointer'
+                  fontWeight: !selectedCategory ? 800 : 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
                 }}
               >
                 All Categories
@@ -200,12 +236,13 @@ export default function Browse() {
                       textAlign: 'left',
                       background: isActive ? 'var(--badge-ai-bg)' : 'transparent',
                       color: isActive ? 'var(--accent-ai)' : 'var(--text-muted)',
-                      border: 'none',
-                      padding: '0.35rem 0.5rem',
-                      borderRadius: 'var(--radius-sm)',
+                      border: isActive ? '1px solid var(--badge-ai-border)' : '1px solid transparent',
+                      padding: '0.45rem 0.75rem',
+                      borderRadius: 'var(--radius-md)',
                       fontSize: '0.85rem',
-                      fontWeight: isActive ? 700 : 500,
-                      cursor: 'pointer'
+                      fontWeight: isActive ? 800 : 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
                     }}
                   >
                     {c.name}
@@ -216,10 +253,10 @@ export default function Browse() {
           </div>
 
           {/* Price Range Slider */}
-          <div style={{ marginBottom: '1.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+          <div style={{ marginBottom: '1.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', fontWeight: 800, marginBottom: '0.5rem' }}>
               <span>Max Budget:</span>
-              <span style={{ color: 'var(--accent-ai)' }}>₹{parseInt(maxPrice, 10).toLocaleString('en-IN')}</span>
+              <span style={{ color: 'var(--accent-ai)', fontWeight: 900 }}>₹{parseInt(maxPrice, 10).toLocaleString('en-IN')}</span>
             </div>
             <input
               type="range"
@@ -232,30 +269,36 @@ export default function Browse() {
             />
           </div>
 
-
           {/* Brand Filter */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.5rem' }}>Brand</label>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-              {brandsList.map(b => (
-                <button
-                  key={b}
-                  onClick={() => handleBrandSelect(b)}
-                  style={{
-                    textAlign: 'left',
-                    background: selectedBrand.toLowerCase() === b.toLowerCase() ? 'var(--badge-ai-bg)' : 'transparent',
-                    color: selectedBrand.toLowerCase() === b.toLowerCase() ? 'var(--accent-ai)' : 'var(--text-muted)',
-                    border: 'none',
-                    padding: '0.35rem 0.5rem',
-                    borderRadius: 'var(--radius-sm)',
-                    fontSize: '0.85rem',
-                    fontWeight: selectedBrand.toLowerCase() === b.toLowerCase() ? 700 : 500,
-                    cursor: 'pointer'
-                  }}
-                >
-                  {b}
-                </button>
-              ))}
+            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, marginBottom: '0.6rem', color: 'var(--text-main)' }}>Brand</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', maxHeight: '240px', overflowY: 'auto' }}>
+              {brandsList.map(b => {
+                const isSelected = selectedBrand.toLowerCase() === b.toLowerCase();
+                return (
+                  <button
+                    key={b}
+                    onClick={() => handleBrandSelect(b)}
+                    style={{
+                      textAlign: 'left',
+                      background: isSelected ? 'var(--badge-ai-bg)' : 'transparent',
+                      color: isSelected ? 'var(--accent-ai)' : 'var(--text-muted)',
+                      border: isSelected ? '1px solid var(--badge-ai-border)' : '1px solid transparent',
+                      padding: '0.4rem 0.65rem',
+                      borderRadius: 'var(--radius-md)',
+                      fontSize: '0.83rem',
+                      fontWeight: isSelected ? 800 : 500,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <span>{b}</span>
+                    {isSelected && <Check size={14} />}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </aside>
@@ -265,14 +308,14 @@ export default function Browse() {
           {loading ? (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' }}>
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="skeleton" style={{ height: '320px', borderRadius: 'var(--radius-md)' }} />
+                <div key={i} className="skeleton" style={{ height: '340px', borderRadius: 'var(--radius-md)' }} />
               ))}
             </div>
           ) : products.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '4rem 1rem', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ textAlign: 'center', padding: '4rem 1rem', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
               <X size={48} style={{ color: 'var(--text-muted)', marginBottom: '1rem' }} />
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>No products match your criteria</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.5rem' }}>No products match your criteria</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '1.5rem' }}>
                 Try adjusting your price range or clearing category filters.
               </p>
               <button onClick={handleResetFilters} className="btn btn-primary">
