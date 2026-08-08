@@ -6,13 +6,22 @@
 [![Prisma](https://img.shields.io/badge/Prisma-5.12-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
 [![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-1.5_Flash-8E44AD?logo=google&logoColor=white)](https://ai.google.dev/)
-[![JWT Auth](https://img.shields.io/badge/JWT-Protected-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
-[![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Netlify Status](https://img.shields.io/badge/Frontend-Netlify-00C7B7?logo=netlify&logoColor=white)](https://www.netlify.com/)
+[![Render Status](https://img.shields.io/badge/Backend-Render-46E3B7?logo=render&logoColor=white)](https://render.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Hackathon](https://img.shields.io/badge/Hackathon-AI_BUILD_2026-FF5722?logo=rocket&logoColor=white)](#-hackathon-information)
-[![Track](https://img.shields.io/badge/Track-7_Discovery_Engine-blue.svg)](#-hackathon-information)
 
-An AI-powered product discovery and personalized recommendation platform that transforms static keyword search into a real-time, intent-aware shopping experience.
+An AI-powered product discovery and personalized recommendation platform that transforms static keyword search into a real-time, intent-aware shopping experience. Built with React, Lenis Smooth Scroll, Express.js, Prisma ORM, and Google Gemini AI.
+
+---
+
+## 🌐 Live Production Deployments
+
+| Component | Deployment Platform | Deployment Target & Status |
+|---|---|---|
+| **Frontend UI** | **Netlify** | Deployed on Netlify (`Base: frontend`, `Build: npm run build`, `Publish: dist`) |
+| **Backend REST API** | **Render** | Deployed on Render Web Service (`Root: backend`, `Build: npm install && npx prisma generate`) |
+| **API Health Check** | **Render** | `GET /api/health` — Returns status `200 OK` JSON |
 
 ---
 
@@ -25,6 +34,7 @@ Traditional e-commerce platforms rely heavily on exact keyword matching. When sh
 2. **Transparent Explainable AI**: Providing multi-metric confidence scores (Confidence %, Attribute Similarity %, Category Match %) alongside human-readable rationales.
 3. **Smart Ecosystem Bundling**: Assembling complementary 4-piece product ecosystems (*Complete The Look*) and Amazon-style *Frequently Bought Together* widgets with 1-click cart addition.
 4. **Never-Empty Cold Start Guarantee**: Ensuring new or unauthenticated users immediately receive high-affinity trending and popular catalog items.
+5. **Fluid Cybernetic UI**: Built with custom glassmorphism 3.0, ambient radial mesh lighting, and **Lenis inertia smooth scrolling**.
 
 ---
 
@@ -41,8 +51,8 @@ This project was developed for **AI BUILD 2026**:
 
 ```mermaid
 flowchart TD
-    User["User / Shopper"] -->|HTTPS / JSON| Frontend["React 18 + Vite Frontend"]
-    Frontend -->|REST API / Axios| Backend["Express.js API Server"]
+    User["User / Shopper"] -->|HTTPS / JSON| Frontend["React 18 + Vite Frontend (Netlify)"]
+    Frontend -->|REST API / Axios| Backend["Express.js API Server (Render)"]
 
     subgraph Core_Services["Core Platform Services"]
         Backend --> IntentDet["Intent Detector Service"]
@@ -113,8 +123,9 @@ sequenceDiagram
 - **Gemini Shopper Intelligence**: Profile-level shopper personality summary generated on the User Profile dashboard.
 
 ### 🛒 Shopping Experience Features
-- **Command-K Spotlight AI Search**: Overlay modal with interactive quick-prompt shortcuts, Gemini thinking animation, and intent breakdown chips.
-- **Apple Store / Nike Style Product Cards**: Soft rounded corners (`22px`), smooth image hover zoom (`scale(1.06)`), micro-shadows, and elegant AI rationale badges.
+- **Lenis Smooth Scroll Engine**: Integrated Lenis smooth scrolling for fluid inertia-driven page navigation.
+- **Command-K Spotlight AI Search**: Overlay command-palette modal with interactive quick-prompt shortcuts, Gemini thinking animation, and intent breakdown chips.
+- **Apple Store / Vercel Style Glass Cards**: Glassmorphism 3.0 styling, smooth image scale hover (`scale(1.08)`), micro-shadows, and elegant AI rationale badges.
 - **Interactive Product Details**: Multi-image preview gallery with hover zoom, technical specification tables, glass AI rationale cards, and horizontal snap-scroll carousels.
 - **Streamlined Checkout Flow**: Delivery address form, order summary sidebar, default *Cash on Delivery* payment option, and order success confirmation page with estimated delivery dates.
 
@@ -123,9 +134,10 @@ sequenceDiagram
 - **Search Analytics**: Top searched terms bar chart, zero-inventory demand alerts, search conversion %, AI usage %, and response latency metrics.
 - **Customer Journey Funnel**: 6-stage conversion tracking (`Home → Search → Product View → Wishlist → Cart → Purchase`) with drop-off percentages.
 - **Recommendation Feedback Loop**: Real-time tracking of recommendation events (`SHOWN`, `CLICKED`, `CARTED`, `PURCHASED`, `DISMISSED`) and CTR % metrics.
-- **Catalog Management (CRUD)**: Modal interface for admins to create, edit, or remove catalog items.
+- **Catalog Management (CRUD)**: Modal interface for admins to create, edit, or remove catalog items cleanly.
 
-### 🔒 Infrastructure & Security Features
+### 🔒 Infrastructure & Deployment Features
+- **Netlify & Render Ready**: Configured CORS origin matching (`FRONTEND_URL`), SPA redirects (`_redirects` & `netlify.toml`), and automatic Prisma client generation.
 - **Authentication & Authorization**: Stateless JWT authentication with BCrypt password hashing and Role-Based Access Control (`CUSTOMER` vs `ADMIN`).
 - **Silent Heuristic Failover**: Zero downtime fallback logic ensuring full application functionality even if third-party AI APIs are unreachable.
 
@@ -136,16 +148,17 @@ sequenceDiagram
 | Layer | Technology | Usage in Project |
 |---|---|---|
 | **Frontend Framework** | **React 18.3** | Component-driven user interface |
+| **Smooth Scroll** | **Lenis 1.3** | Inertia-driven smooth scrolling engine |
 | **Build Tool** | **Vite 5.4** | High-speed ESM bundler and HMR server |
 | **Routing** | **React Router DOM 6.22** | Client-side page navigation & protected routes |
-| **Styling** | **Vanilla CSS Tokens** | Custom design system (`index.css`) with modern aesthetics |
+| **Styling** | **Vanilla CSS Tokens** | Custom design system (`index.css`) with glassmorphism 3.0 |
 | **Data Visualization** | **Recharts 2.12** | Analytics charts & funnel visualizations |
-| **Icons** | **Lucide React 0.344** | Modern vector icon system |
+| **Icons** | **Lucide React 0.359** | Modern vector icon system |
 | **Backend Runtime** | **Node.js v18+** | Server-side JavaScript environment |
 | **Web Framework** | **Express.js 4.19** | REST API routing and middleware pipeline |
-| **Database & ORM** | **Prisma ORM 5.12 + SQLite** | Type-safe schema definition and query builder |
+| **Database & ORM** | **Prisma ORM 5.10 + SQLite** | Type-safe schema definition and query builder |
 | **Artificial Intelligence** | **Google Gemini 1.5 Flash SDK** | `@google/generative-ai` natural language intent parsing |
-| **Security** | **JWT & BCryptJS** | Token authentication and password encryption |
+| **Hosting & Deployment** | **Netlify & Render** | Deployed frontend static site and backend API service |
 
 ---
 
@@ -178,12 +191,14 @@ Discovery Engine/
 │   │   ├── context/              # AuthContext, CartContext, WishlistContext, ThemeContext
 │   │   ├── pages/                # Home, Browse, ProductDetail, CartPage, CheckoutPage, OrderSuccessPage, UserProfilePage, AdminDashboard
 │   │   ├── services/             # Axios API client configuration
-│   │   ├── App.jsx               # Main router & provider wrapper
+│   │   ├── App.jsx               # Main router, Lenis provider & wrapper
 │   │   ├── index.css             # Design tokens, mesh gradients & keyframe animations
 │   │   └── main.jsx              # React entry point
+│   ├── .env.example
 │   ├── index.html
 │   ├── vite.config.js
 │   └── package.json
+├── netlify.toml
 ├── LICENSE
 ├── README.md
 └── .gitignore
@@ -191,7 +206,40 @@ Discovery Engine/
 
 ---
 
+## 🚀 Deployment Guide & Environment Variables
+
+### 1. Render Deployment (Backend Web Service)
+- **Root Directory**: `backend`
+- **Build Command**: `npm install && npx prisma generate`
+- **Start Command**: `npm start`
+- **Environment Variables**:
+  ```env
+  PORT=5000
+  NODE_ENV=production
+  DATABASE_URL=file:./dev.db
+  JWT_SECRET=your-secure-jwt-secret
+  GEMINI_API_KEY=your-google-gemini-api-key
+  FRONTEND_URL=https://your-netlify-app.netlify.app
+  ```
+
+### 2. Netlify Deployment (Frontend React App)
+- **Base Directory**: `frontend`
+- **Build Command**: `npm run build`
+- **Publish Directory**: `dist`
+- **Environment Variables**:
+  ```env
+  VITE_API_URL=https://your-render-backend.onrender.com/api
+  ```
+
+---
+
 ## 📡 API Reference
+
+### Health & Status
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `GET` | `/` | Public | Server API Root Welcome status |
+| `GET` | `/api/health` | Public | Render Health Check endpoint (200 OK) |
 
 ### Authentication
 | Method | Endpoint | Access | Description |
@@ -231,113 +279,6 @@ Discovery Engine/
 | `POST` | `/api/orders/checkout` | Protected | Place customer order (Cash on Delivery) |
 | `GET` | `/api/orders/my-orders` | Protected | List customer order history |
 
-### Admin Analytics & Catalog Management
-| Method | Endpoint | Access | Description |
-|---|---|---|---|
-| `POST` | `/api/admin/products` | Admin | Create a new catalog product |
-| `PUT` | `/api/admin/products/:id` | Admin | Update existing product details |
-| `DELETE` | `/api/admin/products/:id` | Admin | Remove product from catalog |
-| `GET` | `/api/admin/analytics/overview` | Admin | Retrieve KPI overview metrics |
-| `GET` | `/api/admin/analytics/search` | Admin | Retrieve search term analytics & zero-inventory alerts |
-| `GET` | `/api/admin/analytics/journey` | Admin | Retrieve customer conversion funnel metrics |
-| `GET` | `/api/admin/analytics/recommendations` | Admin | Retrieve recommendation feedback loop & CTR % metrics |
-
----
-
-## 🖼️ Application Screenshots
-
-*All screenshots are stored in the `docs/screenshots/` folder.*
-
-### 1. Landing Page
-![Homepage Preview](docs/screenshots/homepage.png)
-
-### 2. Command-K Spotlight AI Search
-![AI Search Preview](docs/screenshots/ai-search.png)
-
-### 3. Personal Recommendations Feed
-![Recommendations Preview](docs/screenshots/homepage.png)
-
-### 4. Product Details & AI Rationale
-![Product Detail Preview](docs/screenshots/product-detail.png)
-
-### 5. Shopping Cart Experience
-![Cart Preview](docs/screenshots/cart.png)
-
-### 6. Streamlined Checkout Flow
-![Checkout Preview](docs/screenshots/checkout.png)
-
-### 7. Admin Analytics Dashboard
-![Admin Dashboard Preview](docs/screenshots/admin-dashboard.png)
-
----
-
-## ⚙️ Environment Variables
-
-Create a `.env` file inside the `backend/` directory:
-
-```env
-# Server Configuration
-PORT=5000
-NODE_ENV=development
-
-# Database Connection
-DATABASE_URL="file:./dev.db"
-
-# Security
-JWT_SECRET="discovery-engine-secret-jwt-key-2026"
-
-# Google Gemini AI Integration (Optional - Fallback active if omitted)
-GEMINI_API_KEY="your-google-gemini-api-key-here"
-```
-
----
-
-## 🚀 Quick Start & Installation Guide
-
-### Prerequisites
-- **Node.js**: `v18.0.0` or higher
-- **npm**: `v9.0.0` or higher
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/NagarjunMallavarpu/Discovery-engine-ai.git
-cd Discovery-engine-ai
-```
-
-### 2. Backend Setup & Seeding
-```bash
-# Navigate to backend directory
-cd backend
-
-# Install dependencies
-npm install
-
-# Push database schema & generate Prisma Client
-npx prisma db push
-
-# Seed database with 18 flagship products across 8 brands (Apple, Asus, Sony, Samsung, Lenovo, Razer, Philips, Dell)
-node prisma/seed.js
-
-# Launch backend development server
-npm run dev
-```
-*The Express REST API server will run at: `http://localhost:5000`*
-
-### 3. Frontend Setup & Launch
-Open a second terminal window:
-
-```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Launch Vite development server
-npm run dev
-```
-*The React application will run at: `http://localhost:5173`*
-
 ---
 
 ## 🔑 Demo Account Credentials
@@ -346,24 +287,6 @@ npm run dev
 |---|---|---|---|
 | **Customer Portal** | `user@discovery.ai` | `password123` | Personal recommendations, Wishlist, Cart, Checkout, User Profile |
 | **Admin Dashboard** | `admin@discovery.ai` | `password123` | Analytics overview, Inventory CRUD, Funnel Metrics, Feedback Loop |
-
----
-
-## 💼 Business Value & Impact
-
-1. **Reduced Search Friction**: Natural language intent parsing eliminates zero-result search pages and helps shoppers locate multi-attribute products faster.
-2. **Higher Average Order Value (AOV)**: Automated ecosystem packages (*Complete The Look*) and 1-click *Frequently Bought Together* widgets drive cross-category accessory purchases.
-3. **Consumer Trust Through Explainability**: Exposing visual confidence scores and natural language rationales demystifies AI recommendations, increasing click-through rates.
-4. **Data-Driven Inventory Insights**: Admins receive zero-inventory search demand alerts, allowing product managers to identify unfulfilled customer demand.
-
----
-
-## 🔮 Future Scope & Roadmap
-
-- [ ] **Vector Database Integration**: Migration to pgvector / Qdrant for dense vector similarity embeddings.
-- [ ] **RAG Architecture**: Retrieval-Augmented Generation using product manuals and user reviews for conversational shopping assistants.
-- [ ] **Multilingual & Voice Search**: Native speech-to-text search input and multi-language translation.
-- [ ] **Collaborative Filtering**: Matrix factorization to complement content-based recommendation scoring.
 
 ---
 
