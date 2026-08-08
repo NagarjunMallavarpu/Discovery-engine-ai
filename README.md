@@ -6,35 +6,38 @@
 [![Prisma](https://img.shields.io/badge/Prisma-5.12-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
 [![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-1.5_Flash-8E44AD?logo=google&logoColor=white)](https://ai.google.dev/)
-[![Netlify Status](https://img.shields.io/badge/Frontend-Netlify-00C7B7?logo=netlify&logoColor=white)](https://www.netlify.com/)
-[![Render Status](https://img.shields.io/badge/Backend-Render-46E3B7?logo=render&logoColor=white)](https://render.com/)
+[![Netlify Status](https://img.shields.io/badge/Frontend-Netlify-00C7B7?logo=netlify&logoColor=white)](https://discovery-engine-ai.netlify.app/)
+[![Render Status](https://img.shields.io/badge/Backend-Render-46E3B7?logo=render&logoColor=white)](https://discovery-engine-ai.onrender.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Hackathon](https://img.shields.io/badge/Hackathon-AI_BUILD_2026-FF5722?logo=rocket&logoColor=white)](#-hackathon-information)
 
-An AI-powered product discovery and personalized recommendation platform that transforms static keyword search into a real-time, intent-aware shopping experience. Built with React, Lenis Smooth Scroll, Express.js, Prisma ORM, and Google Gemini AI.
+An AI-powered product discovery and personalized recommendation platform that transforms static keyword search into a real-time, intent-aware shopping experience.
 
 ---
 
-## 🌐 Live Production Deployments
+## 🎯 Problem & Purpose
 
-| Component | Deployment Platform | Deployment Target & Status |
-|---|---|---|
-| **Frontend UI** | **Netlify** | Deployed on Netlify (`Base: frontend`, `Build: npm run build`, `Publish: dist`) |
-| **Backend REST API** | **Render** | Deployed on Render Web Service (`Root: backend`, `Build: npm install && npx prisma generate`) |
-| **API Health Check** | **Render** | `GET /api/health` — Returns status `200 OK` JSON |
+Traditional e-commerce search mainly depends on keywords and can show many irrelevant products. The **AI Discovery Engine** is built to understand user intent and shopping behavior and provide more relevant, personalized product recommendations.
 
 ---
 
-## 🎯 Project Objective
+## 🚀 Live Demo
 
-Traditional e-commerce platforms rely heavily on exact keyword matching. When shoppers enter natural language queries like *"lightweight laptop for coding and video editing under ₹100,000"* or *"gaming setup for immersive audio"*, keyword search engines often return irrelevant results or empty pages.
+The application is deployed and available live:
 
-**AI Discovery Engine** solves this by:
-1. **Understanding Natural Language Intent**: Parsing intent tags, budget caps, target categories, and specifications using **Google Gemini 1.5 Flash**.
-2. **Transparent Explainable AI**: Providing multi-metric confidence scores (Confidence %, Attribute Similarity %, Category Match %) alongside human-readable rationales.
-3. **Smart Ecosystem Bundling**: Assembling complementary 4-piece product ecosystems (*Complete The Look*) and Amazon-style *Frequently Bought Together* widgets with 1-click cart addition.
-4. **Never-Empty Cold Start Guarantee**: Ensuring new or unauthenticated users immediately receive high-affinity trending and popular catalog items.
-5. **Fluid Cybernetic UI**: Built with custom glassmorphism 3.0, ambient radial mesh lighting, and **Lenis inertia smooth scrolling**.
+- **Frontend UI (Netlify)**: [https://discovery-engine-ai.netlify.app/](https://discovery-engine-ai.netlify.app/)
+- **Backend API (Render)**: [https://discovery-engine-ai.onrender.com/](https://discovery-engine-ai.onrender.com/)
+- **Health Check Endpoint**: [https://discovery-engine-ai.onrender.com/api/health](https://discovery-engine-ai.onrender.com/api/health)
+
+---
+
+## ☁️ Deployment
+
+- **Frontend**: Netlify
+- **Backend**: Render
+- **Database**: SQLite with Prisma ORM
+- **AI Integration**: Google Gemini API (`gemini-1.5-flash`)
+- **API Connection**: The frontend communicates with the deployed Render backend through the `VITE_API_URL` environment variable.
 
 ---
 
@@ -206,30 +209,76 @@ Discovery Engine/
 
 ---
 
-## 🚀 Deployment Guide & Environment Variables
+## 🔑 Environment Variables
 
-### 1. Render Deployment (Backend Web Service)
-- **Root Directory**: `backend`
-- **Build Command**: `npm install && npx prisma generate`
-- **Start Command**: `npm start`
-- **Environment Variables**:
-  ```env
-  PORT=5000
-  NODE_ENV=production
-  DATABASE_URL=file:./dev.db
-  JWT_SECRET=your-secure-jwt-secret
-  GEMINI_API_KEY=your-google-gemini-api-key
-  FRONTEND_URL=https://your-netlify-app.netlify.app
-  ```
+> **Important**: Secrets, API keys, and database credentials must be stored in private environment variable settings (e.g. Render Dashboard / Netlify Settings) and must **never** be committed to GitHub repositories.
 
-### 2. Netlify Deployment (Frontend React App)
-- **Base Directory**: `frontend`
-- **Build Command**: `npm run build`
-- **Publish Directory**: `dist`
-- **Environment Variables**:
-  ```env
-  VITE_API_URL=https://your-render-backend.onrender.com/api
-  ```
+### Backend (`backend/.env`):
+```env
+PORT=
+NODE_ENV=
+DATABASE_URL=
+JWT_SECRET=
+GEMINI_API_KEY=
+FRONTEND_URL=
+```
+
+### Frontend (`frontend/.env`):
+```env
+VITE_API_URL=
+```
+
+---
+
+## 💻 Local Development Guide
+
+### Local Endpoints (Development Only)
+- **Frontend (Local)**: `http://localhost:5173`
+- **Backend (Local)**: `http://localhost:5000`
+
+### Prerequisites
+- **Node.js**: `v18.0.0` or higher
+- **npm**: `v9.0.0` or higher
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/NagarjunMallavarpu/Discovery-engine-ai.git
+cd Discovery-engine-ai
+```
+
+### 2. Backend Setup & Local Launch
+```bash
+# Navigate to backend directory
+cd backend
+
+# Install dependencies
+npm install
+
+# Push database schema & generate Prisma Client
+npx prisma db push
+
+# Seed database with 18 flagship products across 8 brands
+node prisma/seed.js
+
+# Launch local backend server
+npm run dev
+```
+*Local API Server runs at `http://localhost:5000`*
+
+### 3. Frontend Setup & Local Launch
+Open a second terminal window:
+
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Launch local Vite dev server
+npm run dev
+```
+*Local React application runs at `http://localhost:5173`*
 
 ---
 
